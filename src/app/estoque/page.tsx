@@ -29,14 +29,12 @@ import "../styles/Estoque.css"
 
 // Hook personalizado para detectar tamanho da tela
 function useResponsiveView() {
-  const [windowWidth, setWindowWidth] = useState<number>(0)
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
     // Função para atualizar o tamanho da janela
     const handleResize = () => {
       const width = window.innerWidth
-      setWindowWidth(width)
       setIsMobile(width < 1100)
     }
 
@@ -50,7 +48,7 @@ function useResponsiveView() {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  return { windowWidth, isMobile }
+  return { isMobile }
 }
 
 // Componente de Loading
@@ -187,7 +185,7 @@ export default function EstoquePage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
   // Hook responsivo
-  const { windowWidth, isMobile } = useResponsiveView()
+  const { isMobile } = useResponsiveView()
 
   // Efeito para forçar modo lista em telas pequenas
   useEffect(() => {

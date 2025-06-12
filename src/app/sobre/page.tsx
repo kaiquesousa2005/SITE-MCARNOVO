@@ -251,7 +251,7 @@ export default function SobrePage() {
                         <Star key={i} size={16} className="sobre-page-star-filled" />
                       ))}
                     </div>
-                    <p className="sobre-page-testimonial-text">"{testimonial.text}"</p>
+                    <p className="sobre-page-testimonial-text">&ldquo;{testimonial.text}&rdquo;</p>
                     <cite className="sobre-page-testimonial-author">- {testimonial.author}</cite>
                   </CardContent>
                 </Card>

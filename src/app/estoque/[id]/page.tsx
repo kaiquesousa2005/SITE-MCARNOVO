@@ -11,7 +11,31 @@ import { Badge } from "@/components/ui/badge"
 import Header from "../../../components/Header"
 import Footer from "../../../components/Footer"
 import type { Vehicle } from "@/types/vehicle"
-import { ArrowLeft, MessageCircle, Phone, Calendar, Gauge, Fuel, Settings, Car, Shield, Key, FileText, MapPin, Clock, Star, ChevronLeft, ChevronRight, X, Share2, Heart, Calculator, PaletteIcon, TagIcon, Percent } from 'lucide-react'
+import {
+  ArrowLeft,
+  MessageCircle,
+  Phone,
+  Calendar,
+  Gauge,
+  Fuel,
+  Settings,
+  Car,
+  Shield,
+  Key,
+  FileText,
+  MapPin,
+  Clock,
+  Star,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  Share2,
+  Heart,
+  Calculator,
+  PaletteIcon,
+  TagIcon,
+  Percent,
+} from "lucide-react"
 import "@/app/styles/Detalhes.css"
 
 export default function VehicleDetailsPage() {
@@ -42,8 +66,8 @@ export default function VehicleDetailsPage() {
             router.push("/estoque")
           }
         }
-      } catch (error) {
-        console.error("Erro ao carregar veículo:", error)
+      } catch (err) {
+        console.error("Erro ao carregar veículo:", err)
         router.push("/estoque")
       } finally {
         setLoading(false)
@@ -84,12 +108,12 @@ export default function VehicleDetailsPage() {
         marca: vehicle.marca,
         modelo: vehicle.modelo,
         versao: vehicle.versao,
-        ano: vehicle.ano,
+        ano: vehicle.ano.toString(),
         cor: vehicle.cor || "Não informado",
-        preco: vehicle.emOferta ? vehicle.precoOferta : vehicle.preco,
+        preco: (vehicle.emOferta ? vehicle.precoOferta : vehicle.preco)?.toString() || "0",
       }
 
-      const queryParams = new URLSearchParams(vehicleData as any).toString()
+      const queryParams = new URLSearchParams(vehicleData).toString()
       router.push(`/simulacao?${queryParams}`)
     } else {
       router.push("/simulacao")
@@ -104,7 +128,7 @@ export default function VehicleDetailsPage() {
           text: `Confira este ${vehicle.marca} ${vehicle.modelo} na MCar Veículos`,
           url: window.location.href,
         })
-      } catch (error) {
+      } catch (shareError) {
         // Fallback para copiar URL
         navigator.clipboard.writeText(window.location.href)
         alert("Link copiado para a área de transferência!")
@@ -293,7 +317,7 @@ export default function VehicleDetailsPage() {
                     {vehicle.marca} {vehicle.modelo}
                   </h1>
                   <p className="veiculos-detalhes-page-version">{vehicle.versao}</p>
-                  
+
                   {/* Exibição de preço com oferta ou preço normal */}
                   {vehicle.emOferta ? (
                     <div className="veiculos-detalhes-page-price-container">
@@ -405,8 +429,9 @@ export default function VehicleDetailsPage() {
                     <h3 className="veiculos-detalhes-page-additional-title">Informações Adicionais</h3>
                     <div className="veiculos-detalhes-page-additional-grid">
                       <div
-                        className={`veiculos-detalhes-page-additional-item ${vehicle.informacoesAdicionais?.unicoDono ? "active" : ""
-                          }`}
+                        className={`veiculos-detalhes-page-additional-item ${
+                          vehicle.informacoesAdicionais?.unicoDono ? "active" : ""
+                        }`}
                       >
                         <Shield size={20} />
                         <span>Único Dono</span>
@@ -416,8 +441,9 @@ export default function VehicleDetailsPage() {
                       </div>
 
                       <div
-                        className={`veiculos-detalhes-page-additional-item ${vehicle.informacoesAdicionais?.manualCarro ? "active" : ""
-                          }`}
+                        className={`veiculos-detalhes-page-additional-item ${
+                          vehicle.informacoesAdicionais?.manualCarro ? "active" : ""
+                        }`}
                       >
                         <FileText size={20} />
                         <span>Manual do Carro</span>
@@ -427,8 +453,9 @@ export default function VehicleDetailsPage() {
                       </div>
 
                       <div
-                        className={`veiculos-detalhes-page-additional-item ${vehicle.informacoesAdicionais?.chaveReserva ? "active" : ""
-                          }`}
+                        className={`veiculos-detalhes-page-additional-item ${
+                          vehicle.informacoesAdicionais?.chaveReserva ? "active" : ""
+                        }`}
                       >
                         <Key size={20} />
                         <span>Chave Reserva</span>
@@ -466,7 +493,7 @@ export default function VehicleDetailsPage() {
 
                     {/* Destaque para oferta na sidebar */}
                     {vehicle.emOferta && (
-                      <div className="veiculos-detalhes-offer-badge" style={{ marginBottom: '1rem' }}>
+                      <div className="veiculos-detalhes-offer-badge" style={{ marginBottom: "1rem" }}>
                         <Percent size={16} /> Oferta por tempo limitado!
                       </div>
                     )}
