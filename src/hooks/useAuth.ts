@@ -1,8 +1,13 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { type User, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { type User, onAuthStateChanged, signInWithEmailAndPassword, signOut, type AuthError } from "firebase/auth"
 import { auth } from "@/lib/firebase"
+
+interface AuthResult {
+  success: boolean
+  error?: string
+}
 
 export const useAuth = () => {
   const [user, setUser] = useState<User | null>(null)
@@ -17,21 +22,23 @@ export const useAuth = () => {
     return () => unsubscribe()
   }, [])
 
-  const login = async (email: string, password: string) => {
+  const login = async (email: string, password: string): Promise<AuthResult> => {
     try {
       await signInWithEmailAndPassword(auth, email, password)
       return { success: true }
-    } catch (error: any) {
-      return { success: false, error: error.message }
+    } catch (error) {
+      const authError = error as AuthError
+      return { success: false, error: authError.message }
     }
   }
 
-  const logout = async () => {
+  const logout = async (): Promise<AuthResult> => {
     try {
       await signOut(auth)
       return { success: true }
-    } catch (error: any) {
-      return { success: false, error: error.message }
+    } catch (error) {
+      const authError = error as AuthError
+      return { success: false, error: authError.message }
     }
   }
 

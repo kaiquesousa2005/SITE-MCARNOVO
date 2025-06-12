@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import NextImage from "next/image"
 import { useState, useEffect } from "react"
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -69,6 +69,7 @@ const optimizeImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<File
     const canvas = document.createElement("canvas")
     const ctx = canvas.getContext("2d")
     const img = new Image()
+    img.crossOrigin = "anonymous"
 
     img.onload = () => {
       // Calcular novas dimensões mantendo proporção
@@ -629,9 +630,12 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
                       </div>
 
                       <div className="admin-image-preview">
-                        <img
+                        <NextImage
                           src={item.url || (item.file ? URL.createObjectURL(item.file) : "/placeholder.svg")}
                           alt={`Imagem ${index + 1}`}
+                          width={200}
+                          height={150}
+                          className="object-cover rounded"
                         />
                       </div>
 

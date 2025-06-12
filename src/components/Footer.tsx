@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Facebook, Instagram, MapPin, Mail, Phone } from "lucide-react";
-import "../app/styles/Footer.css";
+import Link from "next/link"
+import { Facebook, Instagram, MapPin, Mail, Phone } from "lucide-react"
+import "../app/styles/Footer.css"
 
 function Footer() {
   return (
@@ -9,8 +9,8 @@ function Footer() {
         <div className="footer-section">
           <h3>Sobre a MCar Veículos</h3>
           <p>
-            Especializada em veículos de qualidade, a MCar oferece as melhores
-            opções para você encontrar o carro dos seus sonhos.
+            Especializada em veículos de qualidade, a MCar oferece as melhores opções para você encontrar o carro dos
+            seus sonhos.
           </p>
         </div>
         <div className="footer-section">
@@ -18,25 +18,19 @@ function Footer() {
           <ul>
             <li>
               <Link href="/">Home</Link>
-
             </li>
             <li>
-              <Link href="/sobre">
-                Sobre Nós
-              </Link>
+              <Link href="/sobre">Sobre Nós</Link>
             </li>
             <li>
-              <Link href="/estoque">
-                Estoque
-              </Link>            
-              </li>
+              <Link href="/estoque">Estoque</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-section">
           <h3>Contato</h3>
           <p>
-            <MapPin size={18} /> Av. Américo Barreira, 5626 - Demócrito Rocha,
-            Fortaleza - CE
+            <MapPin size={18} /> Av. Américo Barreira, 5626 - Demócrito Rocha, Fortaleza - CE
           </p>
           <p>
             <Phone size={18} /> (85) 3232-4632
@@ -70,17 +64,12 @@ function Footer() {
       <div className="footer-bottom">
         <p>&copy; 2025 MCar Veículos. Todos os direitos reservados.</p>
         <div>
-          <Link href="/politica-privacidade">
-            Política de Privacidade
-          </Link>{" "}
-          |{" "}
-          <Link href="/termos-uso">
-            Termos de Uso
-          </Link>
+          <Link href="/politica-privacidade">Política de Privacidade</Link> |{" "}
+          <Link href="/termos-uso">Termos de Uso</Link>
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer
