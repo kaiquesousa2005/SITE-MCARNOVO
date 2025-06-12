@@ -1,6 +1,7 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from 'next/font/google'
+import CookieBanner from "@/components/CookieBanner"
 import "./globals.css"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -58,6 +59,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div className="relative">{children}</div>
+        <CookieBanner />
+        {/* Adicione outros scripts ou componentes globais aqui, se necessário */}
       </body>
     </html>
   )
