@@ -66,8 +66,8 @@ export default function VehicleDetailsPage() {
             router.push("/estoque")
           }
         }
-      } catch (err) {
-        console.error("Erro ao carregar veículo:", err)
+      } catch (error) {
+        console.error("Erro ao carregar veículo:", error)
         router.push("/estoque")
       } finally {
         setLoading(false)
@@ -128,7 +128,7 @@ export default function VehicleDetailsPage() {
           text: `Confira este ${vehicle.marca} ${vehicle.modelo} na MCar Veículos`,
           url: window.location.href,
         })
-      } catch (error) {
+      } catch {
         // Fallback para copiar URL
         navigator.clipboard.writeText(window.location.href)
         alert("Link copiado para a área de transferência!")
