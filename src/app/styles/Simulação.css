@@ -1,0 +1,666 @@
+/* ===== PÁGINA DE SIMULAÇÃO - ESTILOS GERAIS ===== */
+
+.simulacao-page-main {
+  min-height: calc(100vh - 200px);
+}
+
+.simulacao-page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ===== HERO SECTION ===== */
+.simulacao-page-hero {
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+  color: white;
+  padding: 3rem 1rem 2rem;
+  text-align: center;
+}
+
+.simulacao-page-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.simulacao-page-back-btn {
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s;
+}
+
+.simulacao-page-back-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.simulacao-page-hero-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.simulacao-page-hero-icon {
+  color: #fbbf24;
+}
+
+.simulacao-page-hero-subtitle {
+  font-size: 1.125rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ===== PROGRESS BAR ===== */
+.simulacao-page-progress {
+  background: #f8fafc;
+  padding: 2rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.simulacao-page-progress-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.simulacao-page-progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.simulacao-page-progress-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 100%;
+  width: 3rem;
+  height: 2px;
+  background: #e2e8f0;
+  z-index: 1;
+}
+
+.simulacao-page-progress-step.completed:not(:last-child)::after {
+  background: #059669;
+}
+
+.simulacao-page-progress-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.simulacao-page-progress-step.active .simulacao-page-progress-circle {
+  background: #1e3a8a;
+  color: white;
+}
+
+.simulacao-page-progress-step.completed .simulacao-page-progress-circle {
+  background: #059669;
+  color: white;
+}
+
+.simulacao-page-progress-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: center;
+}
+
+.simulacao-page-progress-step.active .simulacao-page-progress-label {
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.simulacao-page-progress-step.completed .simulacao-page-progress-label {
+  color: #059669;
+  font-weight: 600;
+}
+
+/* ===== FORM SECTION ===== */
+.simulacao-page-form-section {
+  padding: 3rem 0;
+}
+
+.simulacao-page-form-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.simulacao-page-form-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.simulacao-page-form-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.simulacao-page-form-content {
+  padding: 2rem;
+}
+
+.simulacao-page-form-step {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.simulacao-page-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.simulacao-page-form-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+}
+
+.simulacao-page-form-input {
+  height: 3rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0 1rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.simulacao-page-form-input:focus {
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+.simulacao-page-form-textarea {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 100px;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+.simulacao-page-form-textarea:focus {
+  outline: none;
+  border-color: #1e3a8a;
+  box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.1);
+}
+
+/* ===== CHECKBOX STYLES ===== */
+.simulacao-page-checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.simulacao-page-checkbox-group:hover {
+  border-color: #d1d5db;
+}
+
+.simulacao-page-checkbox-group:has(.simulacao-page-checkbox[data-state="checked"]) {
+  border-color: #1e3a8a;
+  background: rgba(30, 58, 138, 0.05);
+}
+
+.simulacao-page-checkbox {
+  width: 20px;
+  height: 20px;
+}
+
+.simulacao-page-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.875rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.simulacao-page-form-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.simulacao-page-btn-prev {
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  background: white;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.simulacao-page-btn-prev:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.simulacao-page-btn-next {
+  background: #1e3a8a;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.simulacao-page-btn-next:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.simulacao-page-btn-next:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.simulacao-page-btn-submit {
+  background: #25d366;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+
+.simulacao-page-btn-submit:hover:not(:disabled) {
+  background: #1ebe5a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.simulacao-page-btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ===== SIDEBAR ===== */
+.simulacao-page-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ===== VEHICLE CARD ===== */
+.simulacao-page-vehicle-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.simulacao-page-vehicle-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.simulacao-page-vehicle-content {
+  padding: 1.5rem;
+}
+
+.simulacao-page-vehicle-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.simulacao-page-vehicle-version {
+  font-size: 1rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.simulacao-page-vehicle-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.simulacao-page-vehicle-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.simulacao-page-vehicle-detail:last-child {
+  border-bottom: none;
+}
+
+.simulacao-page-vehicle-detail.price {
+  background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid #bbf7d0;
+  margin-top: 0.5rem;
+}
+
+.simulacao-page-vehicle-label {
+  font-size: 0.875rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.simulacao-page-vehicle-value {
+  font-size: 0.875rem;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.simulacao-page-vehicle-price {
+  font-size: 1.125rem;
+  color: #059669;
+  font-weight: 700;
+}
+
+/* ===== INFO CARD ===== */
+.simulacao-page-info-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.simulacao-page-info-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.simulacao-page-info-content {
+  padding: 1.5rem;
+}
+
+.simulacao-page-info-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.simulacao-page-info-step {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.simulacao-page-info-step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #1e3a8a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.875rem;
+  flex-shrink: 0;
+}
+
+.simulacao-page-info-step-text strong {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.simulacao-page-info-step-text p {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.simulacao-page-info-note {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.simulacao-page-info-note svg {
+  color: #3b82f6;
+  min-width: 16px;
+  margin-top: 0.125rem;
+}
+
+.simulacao-page-info-note p {
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ===== RESPONSIVIDADE ===== */
+
+/* Tablets */
+@media (max-width: 768px) {
+  .simulacao-page-hero-title {
+    font-size: 2rem;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .simulacao-page-hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .simulacao-page-back-btn {
+    position: static;
+    margin-bottom: 1rem;
+    align-self: flex-start;
+  }
+
+  .simulacao-page-progress-bar {
+    gap: 2rem;
+  }
+
+  .simulacao-page-progress-step:not(:last-child)::after {
+    width: 2rem;
+  }
+
+  .simulacao-page-form-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .simulacao-page-sidebar {
+    order: -1;
+  }
+
+  .simulacao-page-form-navigation {
+    flex-direction: column;
+  }
+
+  .simulacao-page-btn-next,
+  .simulacao-page-btn-submit {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Smartphones */
+@media (max-width: 480px) {
+  .simulacao-page-hero {
+    padding: 2rem 1rem;
+  }
+
+  .simulacao-page-hero-title {
+    font-size: 1.75rem;
+  }
+
+  .simulacao-page-progress-bar {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .simulacao-page-progress-step:not(:last-child)::after {
+    display: none;
+  }
+
+  .simulacao-page-progress-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .simulacao-page-progress-label {
+    font-size: 0.75rem;
+  }
+
+  .simulacao-page-form-content {
+    padding: 1.5rem;
+  }
+
+  .simulacao-page-form-input {
+    height: 2.75rem;
+    font-size: 0.875rem;
+  }
+
+  .simulacao-page-form-textarea {
+    font-size: 0.875rem;
+  }
+
+  .simulacao-page-checkbox-group {
+    padding: 0.75rem;
+  }
+
+  .simulacao-page-btn-prev,
+  .simulacao-page-btn-next,
+  .simulacao-page-btn-submit {
+    padding: 0.75rem 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .simulacao-page-vehicle-content,
+  .simulacao-page-info-content {
+    padding: 1rem;
+  }
+
+  .simulacao-page-vehicle-name {
+    font-size: 1.125rem;
+  }
+
+  .simulacao-page-vehicle-price {
+    font-size: 1rem;
+  }
+
+  .simulacao-page-info-step {
+    gap: 0.75rem;
+  }
+
+  .simulacao-page-info-step-number {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .simulacao-page-info-note {
+    padding: 0.75rem;
+  }
+}
+
+/* Melhorias de Performance */
+@media (prefers-reduced-motion: reduce) {
+  .simulacao-page-progress-circle,
+  .simulacao-page-btn-prev,
+  .simulacao-page-btn-next,
+  .simulacao-page-btn-submit,
+  .simulacao-page-form-input,
+  .simulacao-page-form-textarea,
+  .simulacao-page-checkbox-group {
+    transition: none;
+  }
+}
+
+/* Otimizações para telas muito pequenas */
+@media (max-width: 320px) {
+  .simulacao-page-container {
+    padding: 0 0.75rem;
+  }
+
+  .simulacao-page-hero-title {
+    font-size: 1.5rem;
+  }
+
+  .simulacao-page-form-content {
+    padding: 1rem;
+  }
+
+  .simulacao-page-vehicle-content,
+  .simulacao-page-info-content {
+    padding: 0.75rem;
+  }
+}
