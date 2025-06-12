@@ -25,12 +25,12 @@ export default function TermosUsoPage() {
                 1. Aceitação dos Termos
               </h2>
               <p>
-                Ao acessar e utilizar o site <strong>www.mcarveiculos.com</strong> ("Site"), você concorda em cumprir e
+                Ao acessar e utilizar o site <strong>www.mcarveiculos.com</strong> (Site), você concorda em cumprir e
                 ficar vinculado aos presentes Termos de Uso. Se você não concordar com qualquer parte destes termos, não
                 deve utilizar nosso site.
               </p>
               <p>
-                Estes termos constituem um acordo legal entre você ("Usuário") e a <strong>MCar Veículos</strong>,
+                Estes termos constituem um acordo legal entre você (Usuário) e a <strong>MCar Veículos</strong>,
                 pessoa jurídica de direito privado, com sede na Avenida Américo Barreira, 5626, Democrito Rocha,
                 Fortaleza - CE.
               </p>
@@ -50,7 +50,7 @@ export default function TermosUsoPage() {
                 <li>Informações sobre a empresa e seus serviços</li>
               </ul>
               <p>
-                Os serviços são fornecidos "como estão" e podem ser modificados, suspensos ou descontinuados a qualquer
+                Os serviços são fornecidos (como estão) e podem ser modificados, suspensos ou descontinuados a qualquer
                 momento, sem aviso prévio.
               </p>
             </section>

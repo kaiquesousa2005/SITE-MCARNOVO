@@ -27,7 +27,7 @@ export default function PoliticaPrivacidadePage() {
               <p>
                 A <strong>MCar Veículos</strong>, pessoa jurídica de direito privado, com sede na Avenida Américo
                 Barreira, 5626, Democrito Rocha, Fortaleza - CE, inscrita no CNPJ sob o nº 23.760.314/0001-98, doravante
-                denominada "MCar", está comprometida com a proteção da privacidade e dos dados pessoais de seus
+                denominada MCar, está comprometida com a proteção da privacidade e dos dados pessoais de seus
                 usuários.
               </p>
               <p>

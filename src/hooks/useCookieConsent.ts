@@ -9,6 +9,13 @@ interface CookieConsent {
   preferences: boolean
 }
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+    fbq?: (...args: unknown[]) => void
+  }
+}
+
 const COOKIE_CONSENT_KEY = "mcar-cookie-consent"
 const COOKIE_CONSENT_DATE_KEY = "mcar-cookie-consent-date"
 
@@ -17,12 +24,10 @@ export const useCookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
-    // Verificar se já existe consentimento
     const savedConsent = localStorage.getItem(COOKIE_CONSENT_KEY)
     const consentDate = localStorage.getItem(COOKIE_CONSENT_DATE_KEY)
 
     if (savedConsent && consentDate) {
-      // Verificar se o consentimento não expirou (6 meses)
       const sixMonthsAgo = new Date()
       sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6)
       const savedDate = new Date(consentDate)
@@ -31,11 +36,9 @@ export const useCookieConsent = () => {
         setConsent(JSON.parse(savedConsent))
         setShowBanner(false)
       } else {
-        // Consentimento expirado
         setShowBanner(true)
       }
     } else {
-      // Primeiro acesso
       setShowBanner(true)
     }
   }, [])
@@ -70,7 +73,6 @@ export const useCookieConsent = () => {
     localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(newConsent))
     localStorage.setItem(COOKIE_CONSENT_DATE_KEY, new Date().toISOString())
 
-    // Ativar/desativar scripts baseado no consentimento
     if (newConsent.analytics) {
       enableGoogleAnalytics()
     }
@@ -80,18 +82,16 @@ export const useCookieConsent = () => {
   }
 
   const enableGoogleAnalytics = () => {
-    // Ativar Google Analytics se consentimento for dado
-    if (typeof window !== "undefined" && (window as any).gtag) {
-      ;(window as any).gtag("consent", "update", {
+    if (typeof window !== "undefined" && window.gtag) {
+      window.gtag("consent", "update", {
         analytics_storage: "granted",
       })
     }
   }
 
   const enableFacebookPixel = () => {
-    // Ativar Facebook Pixel se consentimento for dado
-    if (typeof window !== "undefined" && (window as any).fbq) {
-      ;(window as any).fbq("consent", "grant")
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("consent", "grant")
     }
   }
 
