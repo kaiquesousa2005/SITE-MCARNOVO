@@ -26,14 +26,10 @@ function Footer() {
               </Link>
             </li>
             <li>
-              {/* Como é âncora na mesma página, pode ser <a> direto */}
-              <a href="/#estoque">Nosso Estoque</a>
-            </li>
-            <li>
-              <Link href="/simulação">
-                Faça sua Simulação
-              </Link>
-            </li>
+              <Link href="/estoque">
+                Estoque
+              </Link>            
+              </li>
           </ul>
         </div>
         <div className="footer-section">
