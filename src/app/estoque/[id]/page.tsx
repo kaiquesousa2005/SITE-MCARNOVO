@@ -128,7 +128,7 @@ export default function VehicleDetailsPage() {
           text: `Confira este ${vehicle.marca} ${vehicle.modelo} na MCar Veículos`,
           url: window.location.href,
         })
-      } catch (shareError) {
+      } catch (error) {
         // Fallback para copiar URL
         navigator.clipboard.writeText(window.location.href)
         alert("Link copiado para a área de transferência!")
