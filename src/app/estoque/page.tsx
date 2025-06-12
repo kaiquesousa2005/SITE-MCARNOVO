@@ -250,8 +250,6 @@ export default function EstoquePage() {
               return preco > 50000 && preco <= 80000
             case "acima-80k":
               return preco > 80000
-            case "consulte":
-              return false
             default:
               return true
           }
@@ -434,7 +432,6 @@ export default function EstoquePage() {
                   <SelectItem value="30k-50k">R$ 30.000 - R$ 50.000</SelectItem>
                   <SelectItem value="50k-80k">R$ 50.000 - R$ 80.000</SelectItem>
                   <SelectItem value="acima-80k">Acima de R$ 80.000</SelectItem>
-                  <SelectItem value="consulte">Consulte o preço</SelectItem>
                 </SelectContent>
               </Select>
 
