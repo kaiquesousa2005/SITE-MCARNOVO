@@ -1,143 +1,140 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { Phone, Menu, X, Instagram, Facebook } from "lucide-react"
+import { usePathname } from "next/navigation"
+import { Phone, Menu, X, MessageCircle } from "lucide-react"
+import "../app/styles/Header.css"
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
 
-  const toggleMenu = () => {
+  // Detectar scroll para efeito de header
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Fechar menu ao clicar em links
+  const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen)
   }
 
+  // Prevenir scroll quando menu mobile está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = "auto"
+    }
+
+    return () => {
+      document.body.style.overflow = "auto"
+    }
+  }, [isMenuOpen])
+
   return (
-    <header className="bg-blue-900 text-white sticky top-0 z-50 shadow-lg">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="text-blue-900 px-3 py-1 rounded font-bold text-xl flex items-center space-x-2">
-              <Image src="/images/logomcar.png" alt="MCar Logo" width={150} height={150}/>
-            </div>
+    <header className={`header ${scrolled ? "header-scrolled" : ""}`}>
+      <div className="header-container">
+        {/* Logo */}
+        <Link href="/" className="header-logo">
+          <Image src="/images/logomcar.png" alt="MCar Veículos" width={180} height={60} priority />
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav className="header-nav">
+          <Link href="/" className={`header-nav-item ${pathname === "/" ? "active" : ""}`}>
+            Home
           </Link>
+          <Link href="/sobre" className={`header-nav-item ${pathname === "/sobre" ? "active" : ""}`}>
+            Sobre
+          </Link>
+          <Link href="/estoque" className={`header-nav-item ${pathname === "/estoque" ? "active" : ""}`}>
+            Estoque
+          </Link>
+        </nav>
 
-          {/* Navigation - Desktop */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium">
-              Home
-            </Link>
-            <Link href="/sobre" className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium">
-              Empresa
-            </Link>
-            <Link
-              href="/estoque"
-              className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium"
-            >
-              Estoque
-            </Link>
-          </nav>
-
-          {/* Contact Info - Desktop */}
-          <div className="hidden lg:flex items-center space-x-6">
-            <a
-              href="tel:+5585323246432"
-              className="flex items-center space-x-2 hover:text-yellow-400 transition-colors duration-300"
-            >
-              <Phone className="h-4 w-4" />
-              <span className="text-sm">(85) 3232-4632</span>
-            </a>
-            <div className="flex items-center space-x-3">
-              <a
-                href="https://www.instagram.com/mcarveiculos/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-yellow-400 transition-colors duration-300"
-              >
-                <Instagram className="h-4 w-4" />
-              </a>
-              <a
-                href="https://www.facebook.com/mcarveiculos3/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-yellow-400 transition-colors duration-300"
-              >
-                <Facebook className="h-4 w-4" />
-              </a>
-            </div>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 hover:bg-blue-800 rounded transition-colors duration-300"
-            onClick={toggleMenu}
+        {/* Contact */}
+        <div className="header-contact">
+          <a href="tel:+5585323246432" className="header-phone">
+            <Phone size={18} />
+            <span>(85) 3232-4632</span>
+          </a>
+          <a
+            href="https://wa.me/558532324632?text=Olá! Vim através do site e gostaria de mais informações."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-whatsapp"
           >
-            {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+            <MessageCircle size={18} />
+            <span>WhatsApp</span>
+          </a>
         </div>
 
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-blue-800">
-            <div className="flex flex-col space-y-4">
-              {/* Navigation Links */}
-              <nav className="flex flex-col space-y-3">
-                <Link
-                  href="/"
-                  className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/sobre"
-                  className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Empresa
-                </Link>
-                <Link
-                  href="/estoque"
-                  className="text-white hover:text-yellow-400 transition-colors duration-300 font-medium py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Estoque
-                </Link>
-              </nav>
-
-              {/* Contact Info */}
-              <div className="pt-3 border-t border-blue-800">
-                <a
-                  href="tel:+5585323246432"
-                  className="flex items-center space-x-2 text-white hover:text-yellow-400 transition-colors duration-300 mb-3"
-                >
-                  <Phone className="h-4 w-4" />
-                  <span className="text-sm">(85) 3232-4632</span>
-                </a>
-                <div className="flex items-center space-x-4">
-                  <a
-                    href="https://www.instagram.com/mcarveiculos/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white hover:text-yellow-400 transition-colors duration-300"
-                  >
-                    <Instagram className="h-5 w-5" />
-                  </a>
-                  <a
-                    href="https://www.facebook.com/mcarveiculos3/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white hover:text-yellow-400 transition-colors duration-300"
-                  >
-                    <Facebook className="h-5 w-5" />
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Mobile Menu Button */}
+        <button
+          className="header-menu-toggle"
+          onClick={handleMenuToggle}
+          aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      <div className={`header-mobile ${isMenuOpen ? "open" : ""}`}>
+        <nav className="header-mobile-nav">
+          <Link
+            href="/"
+            className={`header-mobile-item ${pathname === "/" ? "active" : ""}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link
+            href="/sobre"
+            className={`header-mobile-item ${pathname === "/sobre" ? "active" : ""}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Sobre
+          </Link>
+          <Link
+            href="/estoque"
+            className={`header-mobile-item ${pathname === "/estoque" ? "active" : ""}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Estoque
+          </Link>
+        </nav>
+
+        <div className="header-mobile-contact">
+          <a href="tel:+5585323246432" className="header-mobile-phone">
+            <Phone size={20} />
+            <span>(85) 3232-4632</span>
+          </a>
+          <a
+            href="https://wa.me/558532324632?text=Olá! Vim através do site e gostaria de mais informações."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="header-mobile-whatsapp"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <MessageCircle size={20} />
+            <span>Falar no WhatsApp</span>
+          </a>
+        </div>
+      </div>
+
+      {/* Overlay para mobile */}
+      {isMenuOpen && <div className="header-overlay" onClick={() => setIsMenuOpen(false)} />}
     </header>
   )
 }

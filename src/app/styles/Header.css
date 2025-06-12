@@ -1,184 +1,357 @@
+/* ===== HEADER STYLES ===== */
 .header {
-  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
   background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  position: relative;
-  z-index: 100;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
 }
 
-.header-topBar {
-  background-color: #050b7d;
-  padding: 8px 0;
-}
-
-.header-socialContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-socialLink {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: white;
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.header-socialIcons {
-  display: flex;
-  gap: 16px;
-}
-
-.header-socialIcons a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.1);
-  transition: background-color 0.3s ease;
-}
-
-.header-socialIcons a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.header-mainHeader {
-  padding: 16px 0;
-  background-color: white;
+.header-scrolled {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .header-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+  height: 80px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: center;
 }
 
-.header-logoLink {
-  display: block;
-}
-
+/* Logo */
 .header-logo {
-  width: 200px;
-  height: auto;
   display: block;
+  position: relative;
+  z-index: 10;
 }
 
-.header-menuButton {
-  display: none;
-  background: none;
-  border: none;
-  color: #050b7d;
-  cursor: pointer;
-  padding: 8px;
+.header-logo img {
+  height: auto;
+  max-height: 60px;
+  width: auto;
+  transition: transform 0.3s ease;
 }
 
-.header-nav ul {
+.header-logo:hover img {
+  transform: scale(1.03);
+}
+
+/* Navigation */
+.header-nav {
   display: flex;
-  gap: 32px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
   align-items: center;
+  gap: 40px;
 }
 
-.header-nav a {
-  text-decoration: none;
+.header-nav-item {
   color: #333;
+  font-size: 16px;
   font-weight: 500;
-  font-size: 1rem;
-  transition: color 0.3s ease;
+  text-decoration: none;
   padding: 8px 0;
   position: relative;
+  transition: color 0.3s ease;
 }
 
-.header-nav a::after {
+.header-nav-item:hover {
+  color: #1d4ed8;
+}
+
+.header-nav-item::after {
   content: "";
   position: absolute;
   bottom: 0;
   left: 0;
   width: 0;
   height: 2px;
-  background-color: #050b7d;
+  background-color: #1d4ed8;
   transition: width 0.3s ease;
 }
 
-.header-nav a:hover {
-  color: #050b7d;
-}
-
-.header-nav a:hover::after {
+.header-nav-item:hover::after,
+.header-nav-item.active::after {
   width: 100%;
 }
 
-/* Responsivo */
-@media (max-width: 768px) {
-  .header-menuButton {
-    display: block;
+.header-nav-item.active {
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+/* Contact */
+.header-contact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-phone {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.header-phone:hover {
+  color: #1d4ed8;
+  background-color: rgba(29, 78, 216, 0.05);
+}
+
+.header-whatsapp {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #10b981;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.header-whatsapp:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+}
+
+/* Mobile Menu Toggle */
+.header-menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+
+/* Mobile Menu */
+.header-mobile {
+  position: fixed;
+  top: 80px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  padding: 24px;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  z-index: 5;
+}
+
+.header-mobile.open {
+  transform: translateX(0);
+}
+
+.header-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.header-mobile-item {
+  color: #333;
+  font-size: 18px;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.header-mobile-item:hover,
+.header-mobile-item.active {
+  background-color: rgba(29, 78, 216, 0.05);
+  color: #1d4ed8;
+}
+
+.header-mobile-item.active {
+  font-weight: 600;
+}
+
+.header-mobile-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #eee;
+}
+
+.header-mobile-phone {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #333;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.header-mobile-phone:hover {
+  background-color: rgba(29, 78, 216, 0.05);
+  color: #1d4ed8;
+}
+
+.header-mobile-whatsapp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  background-color: #10b981;
+  color: white;
+  font-weight: 500;
+  text-decoration: none;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.header-mobile-whatsapp:hover {
+  background-color: #059669;
+}
+
+/* Overlay */
+.header-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 4;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .header-container {
+    height: 70px;
+  }
+
+  .header-mobile {
+    top: 70px;
+  }
+
+  .header-logo img {
+    max-height: 50px;
   }
 
   .header-nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 30px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-container {
+    height: 70px;
   }
 
-  .header-nav.header-active {
+  .header-nav,
+  .header-contact {
+    display: none;
+  }
+
+  .header-menu-toggle {
     display: block;
   }
 
-  .header-nav ul {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .header-mainHeader {
-    position: relative;
-  }
-
-  .header-logo {
-    width: 150px;
-  }
-
-  .header-socialContainer {
-    flex-direction: column;
-    gap: 12px;
+  .header-logo img {
+    max-height: 45px;
   }
 }
 
 @media (max-width: 480px) {
-  .header-topBar {
-    padding: 12px 0;
-  }
-
-  .header-socialLink {
-    font-size: 0.8rem;
-  }
-
-  .header-socialIcons a {
-    width: 30px;
-    height: 30px;
-  }
-
-  .header-logo {
-    width: 120px;
-  }
-
   .header-container {
     padding: 0 16px;
+    height: 60px;
+  }
+
+  .header-mobile {
+    top: 60px;
+    padding: 20px 16px;
+  }
+
+  .header-logo img {
+    max-height: 40px;
+  }
+
+  .header-mobile-item {
+    font-size: 16px;
+    padding: 14px;
+  }
+
+  .header-mobile-phone,
+  .header-mobile-whatsapp {
+    padding: 14px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .header-logo img,
+  .header-nav-item,
+  .header-nav-item::after,
+  .header-phone,
+  .header-whatsapp,
+  .header-mobile,
+  .header-mobile-item,
+  .header-mobile-phone,
+  .header-mobile-whatsapp {
+    transition: none;
+  }
+}
+
+.header-nav-item:focus,
+.header-phone:focus,
+.header-whatsapp:focus,
+.header-menu-toggle:focus,
+.header-mobile-item:focus,
+.header-mobile-phone:focus,
+.header-mobile-whatsapp:focus {
+  outline: 2px solid #1d4ed8;
+  outline-offset: 2px;
+}
+
+/* Prevenção de CLS (Cumulative Layout Shift) */
+body {
+  padding-top: 80px;
+}
+
+@media (max-width: 1024px) {
+  body {
+    padding-top: 70px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 60px;
   }
 }

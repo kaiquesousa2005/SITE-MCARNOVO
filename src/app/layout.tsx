@@ -6,9 +6,9 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "MCar Veículos - Encontre o Carro dos Seus Sonhos",
+  title: "MCar Veículos",
   description:
-    "Qualidade e confiança em cada veículo. Mais de 15 anos no mercado oferecendo os melhores carros seminovos com financiamento facilitado.",
+    "Qualidade e confiança em cada veículo. Mais de 20 anos no mercado oferecendo os melhores carros seminovos com financiamento facilitado.",
   keywords: "carros seminovos, veículos, financiamento, Fortaleza, MCar",
 }
 
