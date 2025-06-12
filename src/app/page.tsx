@@ -137,7 +137,7 @@ export default function HomePage() {
                 <Button
                   onClick={handleCallClick}
                   variant="outline"
-                  className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+                  className="border-white text-blue-900 hover:bg-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
                   size="lg"
                 >
                   <Phone className="mr-2 h-5 w-5" />
@@ -416,7 +416,7 @@ export default function HomePage() {
 
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-blue-900 px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+              className="border-white text-blue-900 hover:bg-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
               size="lg"
             >
               Ver Estoque
