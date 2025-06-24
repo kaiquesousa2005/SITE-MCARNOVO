@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
@@ -414,14 +415,16 @@ export default function HomePage() {
               Conversar no WhatsApp
             </Button>
 
-            <Button
-              variant="outline"
-              className="border-white text-blue-900 hover:bg-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
-              size="lg"
-            >
-              Ver Estoque
-              <ChevronRight className="ml-2 h-5 w-5" />
-            </Button>
+            <Link href="/estoque" passHref>
+              <Button
+                variant="outline"
+                className="border-white text-blue-900 hover:bg-white px-8 py-4 text-lg font-semibold rounded-full transition-all duration-300"
+                size="lg"
+              >
+                Ver Estoque
+                <ChevronRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
