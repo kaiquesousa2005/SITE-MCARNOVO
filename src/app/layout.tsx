@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
-        {/* Meta Pixel Code */}
+        {/* Meta Pixel Facebook */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -33,29 +33,20 @@ export default function RootLayout({
               t.src=v;s=b.getElementsByTagName(e)[0];
               s.parentNode.insertBefore(t,s)}(window, document,'script',
               'https://connect.facebook.net/en_US/fbevents.js');
-              fbq('init', '2102109436925616');
+              fbq('init', '1383719196068393');
               fbq('track', 'PageView');
             `,
           }}
         />
         <noscript>
-          {/* 
-            Usando um div com estilo em vez de img diretamente.
-            O pixel do Facebook ainda funcionará, mas evitamos o aviso do ESLint.
-          */}
-          <div
-            style={{
-              position: "absolute",
-              width: "1px",
-              height: "1px",
-              overflow: "hidden",
-              backgroundImage: "url('https://www.facebook.com/tr?id=2102109436925616&ev=PageView&noscript=1')",
-              backgroundRepeat: "no-repeat",
-            }}
-            role="presentation"
-            aria-hidden="true"
+          <img
+            height="1"
+            width="1"
+            style={{ display: 'none' }}
+            src="https://www.facebook.com/tr?id=1383719196068393&ev=PageView&noscript=1"
           />
         </noscript>
+
       </head>
       <body className={inter.className}>
         <div className="relative">{children}</div>
