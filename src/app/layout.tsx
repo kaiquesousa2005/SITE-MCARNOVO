@@ -39,10 +39,7 @@ export default function RootLayout({
           }}
         />
         <noscript>
-          {/* 
-            Usando um div com estilo em vez de img diretamente.
-            O pixel do Facebook ainda funcionará, mas evitamos o aviso do ESLint.
-          */}
+
           <div
             style={{
               position: "absolute",
@@ -58,9 +55,11 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className={inter.className}>
+        <script>
+          fbq('track', 'ViewContent');
+        </script>
         <div className="relative">{children}</div>
         <CookieBanner />
-        {/* Adicione outros scripts ou componentes globais aqui, se necessário */}
       </body>
     </html>
   )
