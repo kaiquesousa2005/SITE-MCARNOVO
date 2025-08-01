@@ -35,6 +35,7 @@ export default function RootLayout({
               'https://connect.facebook.net/en_US/fbevents.js');
               fbq('init', '2102109436925616');
               fbq('track', 'PageView');
+                fbq('track', 'ViewContent');
             `,
           }}
         />
@@ -55,9 +56,6 @@ export default function RootLayout({
         </noscript>
       </head>
       <body className={inter.className}>
-        <script>
-          fbq('track', 'ViewContent');
-        </script>
         <div className="relative">{children}</div>
         <CookieBanner />
       </body>
