@@ -31,7 +31,8 @@ export default function LoginPage() {
     try {
       await login(email, password)
       // Navigation will happen automatically via useEffect when user state updates
-    } catch (error) {
+    } catch (err) {
+      console.error("Login error:", err)
       setError("Email ou senha incorretos")
     } finally {
       setLoading(false)

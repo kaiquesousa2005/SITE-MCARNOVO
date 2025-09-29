@@ -406,7 +406,6 @@ export default function VehicleForm({ vehicle, onClose, vehicleType = "carro" }:
   }
 
   const currentMarcas = formData.tipoVeiculo === "moto" ? MARCAS_MOTO : MARCAS
-  const currentTipos = formData.tipoVeiculo === "moto" ? TIPOS_MOTO : TIPOS_CARRO
   const currentCambios = formData.tipoVeiculo === "moto" ? TIPOS_CAMBIO_MOTO : TIPOS_CAMBIO
 
   return (
