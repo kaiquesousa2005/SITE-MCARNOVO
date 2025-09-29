@@ -399,7 +399,6 @@ export default function EstoquePage() {
                   <SelectValue placeholder="Marca" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todas">Todas as marcas</SelectItem>
                   {marcasUnicas.map((marca) => (
                     <SelectItem key={marca} value={marca}>
                       {marca}
@@ -413,7 +412,6 @@ export default function EstoquePage() {
                   <SelectValue placeholder="Ano" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos os anos</SelectItem>
                   {anosUnicos.map((ano) => (
                     <SelectItem key={ano} value={ano.toString()}>
                       {ano}
@@ -427,7 +425,6 @@ export default function EstoquePage() {
                   <SelectValue placeholder="Faixa de preço" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="todos">Todos os preços</SelectItem>
                   <SelectItem value="ate-30k">Até R$ 30.000</SelectItem>
                   <SelectItem value="30k-50k">R$ 30.000 - R$ 50.000</SelectItem>
                   <SelectItem value="50k-80k">R$ 50.000 - R$ 80.000</SelectItem>

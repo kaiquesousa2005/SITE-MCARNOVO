@@ -199,7 +199,6 @@
 }
 
 @keyframes pulse {
-
   0%,
   100% {
     transform: scale(1);
@@ -1008,7 +1007,6 @@
 
 /* Melhorias de Performance */
 @media (prefers-reduced-motion: reduce) {
-
   .veiculos-detalhes-page-image,
   .veiculos-detalhes-page-nav-btn,
   .veiculos-detalhes-page-whatsapp-btn,

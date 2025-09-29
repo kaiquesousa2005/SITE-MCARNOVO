@@ -14,6 +14,7 @@ import "@/app/styles/VehicleForm.css"
 interface VehicleFormProps {
   vehicle?: Vehicle | null
   onClose: () => void
+  vehicleType?: "carro" | "moto" // Added vehicle type prop
 }
 
 interface ImageItem {
@@ -39,11 +40,30 @@ const MARCAS = [
   "Buggy",
 ]
 
+const MARCAS_MOTO = [
+  "Honda",
+  "Yamaha",
+  "Suzuki",
+  "Kawasaki",
+  "BMW",
+  "Ducati",
+  "Harley-Davidson",
+  "KTM",
+  "Triumph",
+  "Royal Enfield",
+  "Dafra",
+  "Shineray",
+]
+
 const TIPOS_CARRO = ["Hatch", "SUV", "Sedã", "Pick-up", "Cupê", "Minivan", "Esportivo"]
+
+const TIPOS_MOTO = ["Street", "Sport", "Naked", "Cruiser", "Adventure", "Trail", "Scooter", "Custom"]
 
 const TIPOS_DIRECAO = ["Direção Elétrica", "Direção Mecânica", "Direção Hidraúlica"]
 
 const TIPOS_CAMBIO = ["Manual", "Automático"]
+
+const TIPOS_CAMBIO_MOTO = ["Manual", "Automático", "CVT"]
 
 const TIPOS_COMBUSTIVEL = ["Gasolina", "Flex", "Diesel", "Elétrico"]
 
@@ -108,8 +128,9 @@ const optimizeImage = (file: File, maxWidth = 1200, quality = 0.8): Promise<File
   })
 }
 
-export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
+export default function VehicleForm({ vehicle, onClose, vehicleType = "carro" }: VehicleFormProps) {
   const [formData, setFormData] = useState<VehicleFormData>({
+    tipoVeiculo: vehicle?.tipoVeiculo || vehicleType,
     marca: "",
     modelo: "",
     versao: "",
@@ -122,6 +143,8 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
     direcao: "",
     combustivel: "",
     cor: "",
+    cilindrada: "", // New motorcycle field
+    tipoMoto: "", // New motorcycle field
     informacoesAdicionais: {
       unicoDono: false,
       manualCarro: false,
@@ -140,18 +163,21 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
   useEffect(() => {
     if (vehicle) {
       setFormData({
+        tipoVeiculo: vehicle.tipoVeiculo,
         marca: vehicle.marca,
         modelo: vehicle.modelo,
         versao: vehicle.versao,
-        tipoCarro: vehicle.tipoCarro,
-        potenciaMotor: vehicle.potenciaMotor,
+        tipoCarro: vehicle.tipoCarro || "",
+        potenciaMotor: vehicle.potenciaMotor || "",
         ano: vehicle.ano.toString(),
         quilometragem: vehicle.quilometragem.toString(),
-        portas: vehicle.portas.toString(),
+        portas: vehicle.portas?.toString() || "",
         cambio: vehicle.cambio,
-        direcao: vehicle.direcao,
+        direcao: vehicle.direcao || "",
         combustivel: vehicle.combustivel,
         cor: vehicle.cor || "",
+        cilindrada: vehicle.cilindrada || "",
+        tipoMoto: vehicle.tipoMoto || "",
         informacoesAdicionais: vehicle.informacoesAdicionais,
         descricao: vehicle.descricao,
         preco: vehicle.preco?.toString() || "",
@@ -327,17 +353,14 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
         }
       })
 
-      const vehicleData = {
+      const vehicleData: Partial<Vehicle> = {
+        tipoVeiculo: formData.tipoVeiculo,
         marca: formData.marca,
         modelo: formData.modelo,
         versao: formData.versao,
-        tipoCarro: formData.tipoCarro,
-        potenciaMotor: formData.potenciaMotor,
         ano: Number.parseInt(formData.ano),
         quilometragem: Number.parseInt(formData.quilometragem),
-        portas: Number.parseInt(formData.portas),
         cambio: formData.cambio,
-        direcao: formData.direcao,
         combustivel: formData.combustivel,
         cor: formData.cor,
         informacoesAdicionais: formData.informacoesAdicionais,
@@ -346,6 +369,20 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
         imagens: allImages,
         destacado: vehicle?.destacado || false,
         updatedAt: new Date(),
+      }
+
+      // Add car-specific fields
+      if (formData.tipoVeiculo === "carro") {
+        vehicleData.tipoCarro = formData.tipoCarro
+        vehicleData.potenciaMotor = formData.potenciaMotor
+        vehicleData.portas = Number.parseInt(formData.portas)
+        vehicleData.direcao = formData.direcao
+      }
+
+      // Add motorcycle-specific fields
+      if (formData.tipoVeiculo === "moto") {
+        vehicleData.cilindrada = formData.cilindrada
+        vehicleData.tipoMoto = formData.tipoMoto
       }
 
       if (vehicle?.id) {
@@ -368,11 +405,19 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
     }
   }
 
+  const currentMarcas = formData.tipoVeiculo === "moto" ? MARCAS_MOTO : MARCAS
+  const currentTipos = formData.tipoVeiculo === "moto" ? TIPOS_MOTO : TIPOS_CARRO
+  const currentCambios = formData.tipoVeiculo === "moto" ? TIPOS_CAMBIO_MOTO : TIPOS_CAMBIO
+
   return (
     <div className="admin-form-overlay">
       <div className="admin-form-container">
         <div className="admin-form-header">
-          <h2>{vehicle ? "Editar Veículo" : "Adicionar Veículo"}</h2>
+          <h2>
+            {vehicle
+              ? `Editar ${formData.tipoVeiculo === "moto" ? "Moto" : "Carro"}`
+              : `Adicionar ${formData.tipoVeiculo === "moto" ? "Moto" : "Carro"}`}
+          </h2>
           <button onClick={onClose} className="admin-form-close">
             <X size={24} />
           </button>
@@ -384,7 +429,7 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
               <label htmlFor="marca">Marca *</label>
               <select id="marca" name="marca" value={formData.marca} onChange={handleInputChange} required>
                 <option value="">Selecione a marca</option>
-                {MARCAS.map((marca) => (
+                {currentMarcas.map((marca) => (
                   <option key={marca} value={marca}>
                     {marca}
                   </option>
@@ -401,7 +446,9 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
                 value={formData.modelo}
                 onChange={handleInputChange}
                 required
-                placeholder="Ex: Civic, Corolla, Gol"
+                placeholder={
+                  formData.tipoVeiculo === "moto" ? "Ex: CB 600F, YZF-R3, Ninja 300" : "Ex: Civic, Corolla, Gol"
+                }
               />
             </div>
 
@@ -414,34 +461,94 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
                 value={formData.versao}
                 onChange={handleInputChange}
                 required
-                placeholder="Ex: EX, XEI, Comfortline"
+                placeholder={formData.tipoVeiculo === "moto" ? "Ex: Hornet, ABS, STD" : "Ex: EX, XEI, Comfortline"}
               />
             </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="tipoCarro">Tipo do Carro *</label>
-              <select id="tipoCarro" name="tipoCarro" value={formData.tipoCarro} onChange={handleInputChange} required>
-                <option value="">Selecione o tipo</option>
-                {TIPOS_CARRO.map((tipo) => (
-                  <option key={tipo} value={tipo}>
-                    {tipo}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {formData.tipoVeiculo === "carro" ? (
+              <>
+                <div className="admin-form-group">
+                  <label htmlFor="tipoCarro">Tipo do Carro *</label>
+                  <select
+                    id="tipoCarro"
+                    name="tipoCarro"
+                    value={formData.tipoCarro}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Selecione o tipo</option>
+                    {TIPOS_CARRO.map((tipo) => (
+                      <option key={tipo} value={tipo}>
+                        {tipo}
+                      </option>
+                    ))}
+                  </select>
+                </div>
 
-            <div className="admin-form-group">
-              <label htmlFor="potenciaMotor">Potência do Motor *</label>
-              <input
-                type="text"
-                id="potenciaMotor"
-                name="potenciaMotor"
-                value={formData.potenciaMotor}
-                onChange={handleInputChange}
-                required
-                placeholder="Ex: 1.0, 1.6, 2.0"
-              />
-            </div>
+                <div className="admin-form-group">
+                  <label htmlFor="potenciaMotor">Potência do Motor *</label>
+                  <input
+                    type="text"
+                    id="potenciaMotor"
+                    name="potenciaMotor"
+                    value={formData.potenciaMotor}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Ex: 1.0, 1.6, 2.0"
+                  />
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="portas">Portas *</label>
+                  <select id="portas" name="portas" value={formData.portas} onChange={handleInputChange} required>
+                    <option value="">Selecione</option>
+                    <option value="2">2 portas</option>
+                    <option value="3">3 portas</option>
+                    <option value="4">4 portas</option>
+                    <option value="5">5 portas</option>
+                  </select>
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="direcao">Direção *</label>
+                  <select id="direcao" name="direcao" value={formData.direcao} onChange={handleInputChange} required>
+                    <option value="">Selecione a direção</option>
+                    {TIPOS_DIRECAO.map((direcao) => (
+                      <option key={direcao} value={direcao}>
+                        {direcao}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="admin-form-group">
+                  <label htmlFor="tipoMoto">Tipo da Moto *</label>
+                  <select id="tipoMoto" name="tipoMoto" value={formData.tipoMoto} onChange={handleInputChange} required>
+                    <option value="">Selecione o tipo</option>
+                    {TIPOS_MOTO.map((tipo) => (
+                      <option key={tipo} value={tipo}>
+                        {tipo}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="admin-form-group">
+                  <label htmlFor="cilindrada">Cilindrada *</label>
+                  <input
+                    type="text"
+                    id="cilindrada"
+                    name="cilindrada"
+                    value={formData.cilindrada}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="Ex: 125cc, 300cc, 600cc"
+                  />
+                </div>
+              </>
+            )}
 
             <div className="admin-form-group">
               <label htmlFor="ano">Ano *</label>
@@ -472,35 +579,12 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
             </div>
 
             <div className="admin-form-group">
-              <label htmlFor="portas">Portas *</label>
-              <select id="portas" name="portas" value={formData.portas} onChange={handleInputChange} required>
-                <option value="">Selecione</option>
-                <option value="2">2 portas</option>
-                <option value="3">3 portas</option>
-                <option value="4">4 portas</option>
-                <option value="5">5 portas</option>
-              </select>
-            </div>
-
-            <div className="admin-form-group">
               <label htmlFor="cambio">Câmbio *</label>
               <select id="cambio" name="cambio" value={formData.cambio} onChange={handleInputChange} required>
                 <option value="">Selecione o câmbio</option>
-                {TIPOS_CAMBIO.map((cambio) => (
+                {currentCambios.map((cambio) => (
                   <option key={cambio} value={cambio}>
                     {cambio}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div className="admin-form-group">
-              <label htmlFor="direcao">Direção *</label>
-              <select id="direcao" name="direcao" value={formData.direcao} onChange={handleInputChange} required>
-                <option value="">Selecione a direção</option>
-                {TIPOS_DIRECAO.map((direcao) => (
-                  <option key={direcao} value={direcao}>
-                    {direcao}
                   </option>
                 ))}
               </select>
@@ -571,7 +655,7 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
                   onCheckedChange={(checked) => handleCheckboxChange(checked, "manualCarro")}
                 />
                 <label htmlFor="manualCarro" className="admin-checkbox-label">
-                  Manual do Carro
+                  {formData.tipoVeiculo === "moto" ? "Manual da Moto" : "Manual do Carro"}
                 </label>
               </div>
               <div className="admin-checkbox-item">
@@ -596,7 +680,7 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
               onChange={handleInputChange}
               required
               rows={4}
-              placeholder="Descreva as características e condições do veículo..."
+              placeholder={`Descreva as características e condições ${formData.tipoVeiculo === "moto" ? "da moto" : "do veículo"}...`}
             />
           </div>
 
@@ -613,7 +697,7 @@ export default function VehicleForm({ vehicle, onClose }: VehicleFormProps) {
             {/* Grid de imagens com drag & drop */}
             {imageItems.length > 0 && (
               <div className="admin-images-section">
-                <h4>Imagens do veículo (arraste para reordenar):</h4>
+                <h4>Imagens {formData.tipoVeiculo === "moto" ? "da moto" : "do veículo"} (arraste para reordenar):</h4>
                 <div className="admin-images-grid-sortable">
                   {imageItems.map((item, index) => (
                     <div

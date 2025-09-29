@@ -35,6 +35,7 @@ import {
   PaletteIcon,
   TagIcon,
   Percent,
+  Bike,
 } from "lucide-react"
 import "@/app/styles/Detalhes.css"
 
@@ -193,6 +194,9 @@ export default function VehicleDetailsPage() {
     )
   }
 
+  const isCar = vehicle.tipoVeiculo === "carro"
+  const isMoto = vehicle.tipoVeiculo === "moto"
+
   return (
     <div className="min-h-screen bg-white">
       <Header />
@@ -222,7 +226,11 @@ export default function VehicleDetailsPage() {
                 {isFavorite ? "Favoritado" : "Favoritar"}
               </Button>
 
-              <Button onClick={handleShare} variant="outline" className="veiculos-detalhes-page-share-btn">
+              <Button
+                onClick={handleShare}
+                variant="outline"
+                className="veiculos-detalhes-page-share-btn bg-transparent"
+              >
                 <Share2 size={16} />
                 Compartilhar
               </Button>
@@ -298,7 +306,7 @@ export default function VehicleDetailsPage() {
                 </>
               ) : (
                 <div className="veiculos-detalhes-page-no-image">
-                  <Car size={64} />
+                  {isMoto ? <Bike size={64} /> : <Car size={64} />}
                   <span>Sem imagens disponíveis</span>
                 </div>
               )}
@@ -364,13 +372,15 @@ export default function VehicleDetailsPage() {
                         </div>
                       </div>
 
-                      <div className="veiculos-detalhes-page-spec-item">
-                        <PaletteIcon size={20} />
-                        <div>
-                          <span className="veiculos-detalhes-page-spec-label">Cor</span>
-                          <span className="veiculos-detalhes-page-spec-value">{vehicle.cor}</span>
+                      {vehicle.cor && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <PaletteIcon size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Cor</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.cor}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
                       <div className="veiculos-detalhes-page-spec-item">
                         <Settings size={20} />
@@ -388,37 +398,65 @@ export default function VehicleDetailsPage() {
                         </div>
                       </div>
 
-                      <div className="veiculos-detalhes-page-spec-item">
-                        <Car size={20} />
-                        <div>
-                          <span className="veiculos-detalhes-page-spec-label">Tipo</span>
-                          <span className="veiculos-detalhes-page-spec-value">{vehicle.tipoCarro}</span>
+                      {isCar && vehicle.tipoCarro && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Car size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Tipo de Carro</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.tipoCarro}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
-                      <div className="veiculos-detalhes-page-spec-item">
-                        <Settings size={20} />
-                        <div>
-                          <span className="veiculos-detalhes-page-spec-label">Portas</span>
-                          <span className="veiculos-detalhes-page-spec-value">{vehicle.portas}</span>
+                      {isMoto && vehicle.tipoMoto && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Bike size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Tipo de Moto</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.tipoMoto}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
-                      <div className="veiculos-detalhes-page-spec-item">
-                        <Gauge size={20} />
-                        <div>
-                          <span className="veiculos-detalhes-page-spec-label">Motor</span>
-                          <span className="veiculos-detalhes-page-spec-value">{vehicle.potenciaMotor}</span>
+                      {isCar && vehicle.portas && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Settings size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Portas</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.portas}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
 
-                      <div className="veiculos-detalhes-page-spec-item">
-                        <Settings size={20} />
-                        <div>
-                          <span className="veiculos-detalhes-page-spec-label">Direção</span>
-                          <span className="veiculos-detalhes-page-spec-value">{vehicle.direcao}</span>
+                      {isCar && vehicle.potenciaMotor && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Gauge size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Motor</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.potenciaMotor}</span>
+                          </div>
                         </div>
-                      </div>
+                      )}
+
+                      {isMoto && vehicle.cilindrada && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Gauge size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Cilindrada</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.cilindrada}</span>
+                          </div>
+                        </div>
+                      )}
+
+                      {isCar && vehicle.direcao && (
+                        <div className="veiculos-detalhes-page-spec-item">
+                          <Settings size={20} />
+                          <div>
+                            <span className="veiculos-detalhes-page-spec-label">Direção</span>
+                            <span className="veiculos-detalhes-page-spec-value">{vehicle.direcao}</span>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -446,7 +484,7 @@ export default function VehicleDetailsPage() {
                         }`}
                       >
                         <FileText size={20} />
-                        <span>Manual do Carro</span>
+                        <span>{isMoto ? "Manual da Moto" : "Manual do Carro"}</span>
                         {vehicle.informacoesAdicionais?.manualCarro && (
                           <Badge className="veiculos-detalhes-page-badge-yes">Sim</Badge>
                         )}
@@ -468,18 +506,20 @@ export default function VehicleDetailsPage() {
                 </Card>
 
                 {/* Descrição */}
-                <Card className="veiculos-detalhes-page-description-card">
-                  <CardContent className="veiculos-detalhes-page-description-content">
-                    <h3 className="veiculos-detalhes-page-description-title">Descrição</h3>
-                    <ul className="veiculos-detalhes-page-description-list">
-                      {formatDescription(vehicle.descricao).map((item, index) => (
-                        <li key={index} className="veiculos-detalhes-page-description-item">
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
+                {vehicle.descricao && (
+                  <Card className="veiculos-detalhes-page-description-card">
+                    <CardContent className="veiculos-detalhes-page-description-content">
+                      <h3 className="veiculos-detalhes-page-description-title">Descrição</h3>
+                      <ul className="veiculos-detalhes-page-description-list">
+                        {formatDescription(vehicle.descricao).map((item, index) => (
+                          <li key={index} className="veiculos-detalhes-page-description-item">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
               </div>
 
               {/* Sidebar de Contato */}
@@ -504,7 +544,11 @@ export default function VehicleDetailsPage() {
                         WhatsApp
                       </Button>
 
-                      <Button onClick={handleCallClick} variant="outline" className="veiculos-detalhes-page-call-btn">
+                      <Button
+                        onClick={handleCallClick}
+                        variant="outline"
+                        className="veiculos-detalhes-page-call-btn bg-transparent"
+                      >
                         <Phone size={20} />
                         Ligar
                       </Button>
@@ -512,7 +556,7 @@ export default function VehicleDetailsPage() {
                       <Button
                         onClick={handleSimulationClick}
                         variant="outline"
-                        className="veiculos-detalhes-page-simulation-btn"
+                        className="veiculos-detalhes-page-simulation-btn bg-transparent"
                       >
                         <Calculator size={20} />
                         Simular Financiamento

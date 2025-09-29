@@ -6,8 +6,9 @@ import { db } from "@/lib/firebase"
 import { useAuth } from "@/hooks/useAuth"
 import ProtectedRoute from "@/components/ProtectedRoute"
 import VehicleForm from "@/components/VehicleForm"
+import VehicleTypeSelector from "@/components/VehicleTypeSelector"
 import type { Vehicle } from "@/types/vehicle"
-import { Plus, Edit, Trash2, Star, StarOff, LogOut, Car, Tag, X } from "lucide-react"
+import { Plus, Edit, Trash2, Star, StarOff, LogOut, Car, Tag, X, Bike } from "lucide-react"
 import Header from "@/components/Header"
 import "../styles/Admin.css"
 
@@ -19,7 +20,7 @@ interface OfferModalProps {
     onRemove: (vehicleId: string) => void
 }
 
-function OfferModal({ vehicle, onClose, onSave, onRemove }: OfferModalProps) {
+function AdminOfferModal({ vehicle, onClose, onSave, onRemove }: OfferModalProps) {
     const [offerPrice, setOfferPrice] = useState(vehicle.precoOferta?.toString() || "")
     const [loading, setLoading] = useState(false)
 
@@ -110,6 +111,8 @@ function OfferModal({ vehicle, onClose, onSave, onRemove }: OfferModalProps) {
 export default function AdminPage() {
     const [vehicles, setVehicles] = useState<Vehicle[]>([])
     const [showForm, setShowForm] = useState(false)
+    const [showTypeSelector, setShowTypeSelector] = useState(false)
+    const [selectedVehicleType, setSelectedVehicleType] = useState<"carro" | "moto">("carro")
     const [editingVehicle, setEditingVehicle] = useState<Vehicle | null>(null)
     const [showOfferModal, setShowOfferModal] = useState(false)
     const [offerVehicle, setOfferVehicle] = useState<Vehicle | null>(null)
@@ -119,6 +122,7 @@ export default function AdminPage() {
     const [searchTerm, setSearchTerm] = useState("")
     const [filterMarca, setFilterMarca] = useState("")
     const [filterDestacado, setFilterDestacado] = useState<"all" | "destacado" | "normal">("all")
+    const [filterTipoVeiculo, setFilterTipoVeiculo] = useState<"all" | "carro" | "moto">("all")
 
     const loadVehicles = async () => {
         try {
@@ -184,23 +188,19 @@ export default function AdminPage() {
     const handleCloseForm = () => {
         setShowForm(false)
         setEditingVehicle(null)
+        setShowTypeSelector(false)
         loadVehicles()
     }
 
-    const handleLogout = async () => {
-        if (window.confirm("Tem certeza que deseja sair?")) {
-            await logout()
-        }
+    const handleVehicleTypeSelect = (type: "carro" | "moto") => {
+        setSelectedVehicleType(type)
+        setShowTypeSelector(false)
+        setShowForm(true)
     }
 
-    const handleOpenOfferModal = (vehicle: Vehicle) => {
-        setOfferVehicle(vehicle)
-        setShowOfferModal(true)
-    }
-
-    const handleCloseOfferModal = () => {
-        setShowOfferModal(false)
-        setOfferVehicle(null)
+    const handleAddVehicle = () => {
+        setEditingVehicle(null)
+        setShowTypeSelector(true)
     }
 
     const handleSaveOffer = async (vehicleId: string, offerPrice: number) => {
@@ -233,6 +233,16 @@ export default function AdminPage() {
         }
     }
 
+    const handleOpenOfferModal = (vehicle: Vehicle) => {
+        setOfferVehicle(vehicle)
+        setShowOfferModal(true)
+    }
+
+    const handleCloseOfferModal = () => {
+        setShowOfferModal(false)
+        setOfferVehicle(null)
+    }
+
     return (
         <ProtectedRoute>
             <Header />
@@ -246,7 +256,7 @@ export default function AdminPage() {
                                 <p>MCar Veículos</p>
                             </div>
                         </div>
-                        <button onClick={handleLogout} className="admin-logout-btn">
+                        <button onClick={logout} className="admin-logout-btn">
                             <LogOut size={20} />
                             Sair
                         </button>
@@ -261,6 +271,14 @@ export default function AdminPage() {
                                 <span className="admin-stat-number">{vehicles.length}</span>
                             </div>
                             <div className="admin-stat-card">
+                                <h3>Carros</h3>
+                                <span className="admin-stat-number">{vehicles.filter((v) => v.tipoVeiculo === "carro").length}</span>
+                            </div>
+                            <div className="admin-stat-card">
+                                <h3>Motos</h3>
+                                <span className="admin-stat-number">{vehicles.filter((v) => v.tipoVeiculo === "moto").length}</span>
+                            </div>
+                            <div className="admin-stat-card">
                                 <h3>Em Destaque</h3>
                                 <span className="admin-stat-number">{vehicles.filter((v) => v.destacado).length}</span>
                             </div>
@@ -268,21 +286,9 @@ export default function AdminPage() {
                                 <h3>Em Oferta</h3>
                                 <span className="admin-stat-number">{vehicles.filter((v) => v.emOferta).length}</span>
                             </div>
-                            <div className="admin-stat-card">
-                                <h3>Adicionados Hoje</h3>
-                                <span className="admin-stat-number">
-                                    {
-                                        vehicles.filter((v) => {
-                                            const today = new Date()
-                                            const vehicleDate = new Date(v.createdAt)
-                                            return vehicleDate.toDateString() === today.toDateString()
-                                        }).length
-                                    }
-                                </span>
-                            </div>
                         </div>
 
-                        <button onClick={() => setShowForm(true)} className="admin-add-btn">
+                        <button onClick={handleAddVehicle} className="admin-add-btn">
                             <Plus size={20} />
                             Adicionar Veículo
                         </button>
@@ -317,6 +323,16 @@ export default function AdminPage() {
                             </select>
 
                             <select
+                                value={filterTipoVeiculo}
+                                onChange={(e) => setFilterTipoVeiculo(e.target.value as "all" | "carro" | "moto")}
+                                className="admin-filter-select"
+                            >
+                                <option value="all">Todos os tipos</option>
+                                <option value="carro">Carros</option>
+                                <option value="moto">Motos</option>
+                            </select>
+
+                            <select
                                 value={filterDestacado}
                                 onChange={(e) => setFilterDestacado(e.target.value as "all" | "destacado" | "normal")}
                                 className="admin-filter-select"
@@ -346,12 +362,14 @@ export default function AdminPage() {
 
                                     const matchesMarca = filterMarca === "" || vehicle.marca === filterMarca
 
+                                    const matchesTipoVeiculo = filterTipoVeiculo === "all" || vehicle.tipoVeiculo === filterTipoVeiculo
+
                                     const matchesDestacado =
                                         filterDestacado === "all" ||
                                         (filterDestacado === "destacado" && vehicle.destacado) ||
                                         (filterDestacado === "normal" && !vehicle.destacado)
 
-                                    return matchesSearch && matchesMarca && matchesDestacado
+                                    return matchesSearch && matchesMarca && matchesTipoVeiculo && matchesDestacado
                                 })
 
                                 if (filteredVehicles.length === 0) {
@@ -392,7 +410,7 @@ export default function AdminPage() {
                                                 />
                                             ) : (
                                                 <div className="admin-no-image">
-                                                    <Car size={40} />
+                                                    {vehicle.tipoVeiculo === "carro" ? <Car size={40} /> : <Bike size={40} />}
                                                 </div>
                                             )}
                                         </div>
@@ -471,10 +489,20 @@ export default function AdminPage() {
                     )}
                 </main>
 
-                {showForm && <VehicleForm vehicle={editingVehicle} onClose={handleCloseForm} />}
+                {showTypeSelector && (
+                    <VehicleTypeSelector onSelect={handleVehicleTypeSelect} onClose={() => setShowTypeSelector(false)} />
+                )}
+
+                {showForm && (
+                    <VehicleForm
+                        vehicle={editingVehicle}
+                        onClose={handleCloseForm}
+                        vehicleType={editingVehicle?.tipoVeiculo || selectedVehicleType}
+                    />
+                )}
 
                 {showOfferModal && offerVehicle && (
-                    <OfferModal
+                    <AdminOfferModal
                         vehicle={offerVehicle}
                         onClose={handleCloseOfferModal}
                         onSave={handleSaveOffer}

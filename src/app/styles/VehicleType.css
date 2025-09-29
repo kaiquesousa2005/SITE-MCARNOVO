@@ -1,0 +1,48 @@
+        .vehicle-type-selector {
+          padding: 2rem;
+        }
+
+        .vehicle-type-options {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+
+        .vehicle-type-option {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding: 2rem 1.5rem;
+          border: 2px solid #e5e7eb;
+          border-radius: 12px;
+          background: white;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: center;
+        }
+
+        .vehicle-type-option:hover {
+          border-color: #3b82f6;
+          background: #f8fafc;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .vehicle-type-option h3 {
+          margin: 1rem 0 0.5rem 0;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #1f2937;
+        }
+
+        .vehicle-type-option p {
+          margin: 0;
+          color: #6b7280;
+          font-size: 0.875rem;
+        }
+
+        @media (max-width: 640px) {
+          .vehicle-type-options {
+            grid-template-columns: 1fr;
+          }
+        }
