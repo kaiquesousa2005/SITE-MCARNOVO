@@ -9,6 +9,7 @@ import VehicleForm from "@/components/VehicleForm"
 import VehicleTypeSelector from "@/components/VehicleTypeSelector"
 import type { Vehicle } from "@/types/vehicle"
 import { Plus, Edit, Trash2, Star, StarOff, LogOut, Car, Tag, X, Bike } from "lucide-react"
+import Image from "next/image"
 import Header from "@/components/Header"
 import "../styles/Admin.css"
 
@@ -402,13 +403,17 @@ export default function AdminPage() {
                                             </div>
                                         )}
 
-                                        <div className="admin-vehicle-image">
-                                            {vehicle.imagens && vehicle.imagens.length > 0 ? (
-                                                <img
-                                                    src={vehicle.imagens[0] || "/placeholder.svg"}
-                                                    alt={`${vehicle.marca} ${vehicle.modelo}`}
-                                                />
-                                            ) : (
+<div className="admin-vehicle-image">
+                                                            {vehicle.imagens && vehicle.imagens.length > 0 ? (
+                                                                <Image
+                                                                    src={vehicle.imagens[0] || "/placeholder.svg"}
+                                                                    alt={`${vehicle.marca} ${vehicle.modelo}`}
+                                                                    fill
+                                                                    sizes="(max-width: 768px) 100vw, 300px"
+                                                                    className="object-cover"
+                                                                    unoptimized
+                                                                />
+                                                            ) : (
                                                 <div className="admin-no-image">
                                                     {vehicle.tipoVeiculo === "carro" ? <Car size={40} /> : <Bike size={40} />}
                                                 </div>
