@@ -290,7 +290,7 @@ export default function AdminPage() {
 
                         <button onClick={handleAddVehicle} className="admin-add-btn">
                             <Plus size={20} />
-                            Adicionar Veículos
+                            Adicionar Veículo
                         </button>
                     </div>
 
