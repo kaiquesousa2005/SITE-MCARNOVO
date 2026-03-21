@@ -4,8 +4,7 @@ import type React from "react"
 import NextImage from "next/image"
 import { useState, useEffect } from "react"
 import { collection, addDoc, updateDoc, doc } from "firebase/firestore"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
-import { db, storage } from "@/lib/firebase"
+import { db } from "@/lib/firebase"
 import type { Vehicle, VehicleFormData } from "@/types/vehicle"
 import { X, Upload, Trash2, GripVertical, ImageIcon } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -321,13 +320,22 @@ export default function VehicleForm({ vehicle, onClose, vehicleType = "carro" }:
   }
 
   const uploadImages = async (images: File[]): Promise<string[]> => {
-    const uploadPromises = images.map(async (image) => {
-      const imageRef = ref(storage, `vehicles/${Date.now()}_${image.name}`)
-      await uploadBytes(imageRef, image)
-      return getDownloadURL(imageRef)
+    const formData = new FormData()
+    images.forEach((image) => {
+      formData.append('files', image)
     })
 
-    return Promise.all(uploadPromises)
+    const response = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    })
+
+    if (!response.ok) {
+      throw new Error('Falha no upload das imagens')
+    }
+
+    const data = await response.json()
+    return data.urls
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
