@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import SafeImage from "@/components/SafeImage"
 import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
@@ -203,7 +204,7 @@ export default function HomePage() {
                   {/* Imagem do Veículo */}
                   <div className="featured-vehicle-image">
                     {vehicle.imagens && vehicle.imagens.length > 0 ? (
-                      <Image
+                      <SafeImage
                         src={vehicle.imagens[0] || "/placeholder.svg"}
                         alt={`${vehicle.marca} ${vehicle.modelo}`}
                         fill
