@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, Suspense } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import SafeImage from "@/components/SafeImage"
 import { collection, getDocs, query, orderBy } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
@@ -89,7 +90,7 @@ function VehicleCard({ vehicle }: { vehicle: Vehicle }) {
         {/* Imagem do Veículo */}
         <div className="page-estoque-vehicle-image">
           {vehicle.imagens && vehicle.imagens.length > 0 ? (
-            <Image
+            <SafeImage
               src={vehicle.imagens[0] || "/placeholder.svg"}
               alt={`${vehicle.marca} ${vehicle.modelo}`}
               fill

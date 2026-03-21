@@ -721,12 +721,13 @@ export default function VehicleForm({ vehicle, onClose, vehicleType = "carro" }:
                       </div>
 
                       <div className="admin-image-preview">
-                        <NextImage
+                        <img
                           src={item.url || (item.file ? URL.createObjectURL(item.file) : "/placeholder.svg")}
                           alt={`Imagem ${index + 1}`}
                           width={200}
                           height={150}
                           className="object-cover rounded"
+                          style={{ width: 200, height: 150, objectFit: 'cover' }}
                         />
                       </div>
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import { useParams, useRouter } from "next/navigation"
-import Image from "next/image"
+import SafeImage from "@/components/SafeImage"
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "@/lib/firebase"
 import { Button } from "@/components/ui/button"
@@ -244,13 +244,12 @@ export default function VehicleDetailsPage() {
             <div className="veiculos-detalhes-page-gallery">
               {vehicle.imagens && vehicle.imagens.length > 0 ? (
                 <>
-                  <div className="veiculos-detalhes-page-main-image">
-                    <Image
+                  <div className="veiculos-detalhes-page-main-image" onClick={() => setShowImageModal(true)}>
+                    <SafeImage
                       src={vehicle.imagens[currentImageIndex] || "/placeholder.svg"}
                       alt={`${vehicle.marca} ${vehicle.modelo} - Imagem ${currentImageIndex + 1}`}
                       fill
                       className="veiculos-detalhes-page-image"
-                      onClick={() => setShowImageModal(true)}
                       priority
                     />
 
@@ -293,7 +292,7 @@ export default function VehicleDetailsPage() {
                           onClick={() => setCurrentImageIndex(index)}
                           className={`veiculos-detalhes-page-thumbnail ${index === currentImageIndex ? "active" : ""}`}
                         >
-                          <Image
+                          <SafeImage
                             src={image || "/placeholder.svg"}
                             alt={`Thumbnail ${index + 1}`}
                             fill
@@ -612,7 +611,7 @@ export default function VehicleDetailsPage() {
               <X size={24} />
             </button>
 
-            <Image
+            <SafeImage
               src={vehicle.imagens[currentImageIndex] || "/placeholder.svg"}
               alt={`${vehicle.marca} ${vehicle.modelo} - Imagem ${currentImageIndex + 1}`}
               fill
